@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,7 +44,40 @@ Route::get("user/{name?}", function ($name = "GUEST") {
 //     return view('shop');
 // });
 
-Route::get('/home', [PageController::class,'home']);
-Route::get('/shop', [PageController::class,'hamada']);
-Route::get('/contact-us', [PageController::class,'contact']);
-Route::post('/create-contact', [PageController::class,'create_contact'])->name("create_contact");
+Route::get('/home', [PageController::class, 'home']);
+Route::get('/shop', [PageController::class, 'hamada']);
+Route::get('/contact-us', [PageController::class, 'contact']);
+Route::post('/create-contact', [PageController::class, 'create_contact'])->name("create_contact");
+
+
+
+
+
+
+
+Route::get("test", function () {
+    // select * from products where id = 1;
+    // $p1 = Product::where("name", "ali")->where("active", true)->get();
+    // foreach($p1 as $p){
+    //     dd($p->name);
+    // }
+
+    // $p1 = new Product();
+    // $p1->name = "product 1";
+    // $p1->price = "10.99";
+    // $p1->active = false;
+    // $p1->save();
+
+
+    // $p1 = Product::find(1);
+    // $p1->name = "pro 22222222";
+    // $p1->save();
+    // dD($p1);
+
+    // $p1 = Product::find(1)->delete();
+
+    Product::create([
+        "name" => "pro 1",
+        "price" => "100.99"
+    ]);
+});
