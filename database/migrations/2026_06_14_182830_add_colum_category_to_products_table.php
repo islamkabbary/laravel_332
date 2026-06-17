@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string("catagory")->nullable();
+            // $table->unsignedBigInteger("category_id");
+            // $table->foreign("category_id")->references("id")->on("categories");
+
+
+            // 
+            // $table->foreignId("category_id")->nullable()->constrained();
         });
     }
 
@@ -22,7 +27,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn("catagory");
+            $table->dropForeign("category_id");
+            $table->dropColumn("category_id");
         });
     }
 };

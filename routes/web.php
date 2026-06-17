@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Models\category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -76,8 +77,28 @@ Route::get("test", function () {
 
     // $p1 = Product::find(1)->delete();
 
-    Product::create([
-        "name" => "pro 1",
-        "price" => "100.99"
-    ]);
+    // Product::create([
+    //     "name" => "pro 1",
+    //     "price" => "100.99"
+    // ]);
+
+    // $pro1 = Product::active()->get();
+    // $pro1 = Product::orderBy("created_at","desc")->get();
+    // $pro1 = Product::active()->where("name", "ali")->orderBy("created_at","desc")->get();
+
+    
+    // $p1 = Product::find(2)->details()->get();
+    // $p1 = Product::find(2)->details()->createMany([
+    //     ["d1"],
+    //     ["d2"],
+    //     ["d3"]
+    // ]);
+    // $p1 = Product::find(2)->details()->update([
+        
+    // ]);
+    // $p1 = Product::find(2)->details()->delete();
+    // $p1 = Product::find(2)->category;
+    // dd(category::find(1)->products);
+    dd(Product::find(1)->categories);
+    // dd($p1);
 });
