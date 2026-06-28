@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("name")->unique();
             $table->decimal("price",10,2);
             $table->boolean("active")->default(true);
+            $table->foreignId("created_by")->constrained("users")->onDelete("cascade");
             $table->timestamps();
         });
     }

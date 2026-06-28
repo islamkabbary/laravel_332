@@ -13,15 +13,18 @@
     <div class="container mb-5" style="margin-top: -50px;">
         <div class="row g-4">
             @foreach ($products as $product)
+            {{-- @dd($product) --}}
                 <div class="col-md-3 col-sm-6">
-                    {{-- <x-product-card-component :title="{{ $product['title'] }}" :old_price="{{ $product['old_price'] }}"> --}}
-                    <x-product-card-component>
-                        <x-slot name="title">{{ $product['title'] }}</x-slot>
-                        <x-slot name="old_price">{{ $product['old_price'] }}</x-slot>
-                        <x-slot name="new_price">{{ $product['new_price'] }}</x-slot>
-                    </x-product-card-component>
+                    <x-product-card-component :product="$product" />
+                    {{-- <x-product-card-component>
+                        <x-slot name="title">{{ $product['name'] }}</x-slot>
+                        <x-slot name="old_price">{{ $product['price'] }}</x-slot>
+                        <x-slot name="new_price">{{ $product['price'] }}</x-slot>
+                        <x-slot name="created_by">{{ $product }}</x-slot>
+                    </x-product-card-component> --}}
                 </div>
             @endforeach
+            {{ $products->links() }}
         </div>
     </div>
 

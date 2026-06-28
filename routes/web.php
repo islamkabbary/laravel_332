@@ -3,7 +3,11 @@
 use App\Http\Controllers\PageController;
 use App\Models\category;
 use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 Route::get('/', function () {
@@ -66,6 +70,7 @@ Route::get("test", function () {
     // $p1 = new Product();
     // $p1->name = "product 1";
     // $p1->price = "10.99";
+    // $p1->created_by = 1;
     // $p1->active = false;
     // $p1->save();
 
@@ -86,7 +91,7 @@ Route::get("test", function () {
     // $pro1 = Product::orderBy("created_at","desc")->get();
     // $pro1 = Product::active()->where("name", "ali")->orderBy("created_at","desc")->get();
 
-    
+
     // $p1 = Product::find(2)->details()->get();
     // $p1 = Product::find(2)->details()->createMany([
     //     ["d1"],
@@ -94,11 +99,42 @@ Route::get("test", function () {
     //     ["d3"]
     // ]);
     // $p1 = Product::find(2)->details()->update([
-        
+
     // ]);
     // $p1 = Product::find(2)->details()->delete();
-    // $p1 = Product::find(2)->category;
     // dd(category::find(1)->products);
-    dd(Product::find(1)->categories);
-    // dd($p1);
+    // dd(Product::find(1)->categories);
+    // $p1 = Product::find(2);
+    // // $p1->categories()->syncWithoutDetaching([5, 6, 7]);
+    // $p1->categories()->detach(2);
+    // dd($p1->categories);
+
+
+    // dd(DB::table("products")->get());
+    // dd(DB::table("products")->where('id',1)->first());
+    // dd(DB::table("products")->insert([
+    //     [
+    //         "name" => "pro q 555",
+    //         "price" => "500",
+    //         "created_by" => "1",
+    //     ],
+    //     [
+    //         "name" => "pro q 666",
+    //         "price" => "500",
+    //         "created_by" => "1",
+    //     ]
+    // ]));
+
+
+    $products = DB::table("products as p")->join('category_product as cp', 'p.id', "=", 'cp.product_id')
+    ->join("categories as c", 'cp.category_id', "=", "c.id")->select("p.id","p.name","c.name as category_name")->get();
+    dd($products);
+    
 });
+
+
+
+// Route::get("faker-products",function(){
+//     User::factory(100)->create();
+//     Product::factory(10000)->create();
+// });
