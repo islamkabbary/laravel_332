@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\IsAdminMiddleware;
 use App\Models\category;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -126,15 +127,21 @@ Route::get("test", function () {
     // ]));
 
 
-    $products = DB::table("products as p")->join('category_product as cp', 'p.id', "=", 'cp.product_id')
-    ->join("categories as c", 'cp.category_id', "=", "c.id")->select("p.id","p.name","c.name as category_name")->get();
-    dd($products);
-    
+    $products = DB::table("products as p")->join('category_product as cp', 'p.id' , "=" , 'cp.product_id');
 });
 
+Route::get('/test-midd', function () {
+    return view('dashboard');
+})->middleware(['is_admin']);
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::get("faker-products",function(){
-//     User::factory(100)->create();
-//     Product::factory(10000)->create();
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
