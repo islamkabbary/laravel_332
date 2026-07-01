@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Models\category;
@@ -127,7 +128,7 @@ Route::get("test", function () {
     // ]));
 
 
-    $products = DB::table("products as p")->join('category_product as cp', 'p.id' , "=" , 'cp.product_id');
+    $products = DB::table("products as p")->join('category_product as cp', 'p.id', "=", 'cp.product_id');
 });
 
 Route::get('/test-midd', function () {
@@ -144,4 +145,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+
+
+
+// Route::get('/products', [ProductController::class, 'index']);
+// Route::get('/products/create', [ProductController::class, 'create']);
+// Route::post('/products', [ProductController::class, 'store']);
+// Route::get('/products/{id}', [ProductController::class, 'show']);
+
+// Route::get('/products/{id}/edit', [ProductController::class, 'edit']);
+// Route::put('/products/{id}', [ProductController::class, 'update']);
+
+// Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+Route::middleware('auth')->group(function () {
+    Route::resource("products", ProductController::class);
+});

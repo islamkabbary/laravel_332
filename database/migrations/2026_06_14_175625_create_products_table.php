@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             // name price active category des
             $table->id();
+            // $table->uuid();
+            // $table->ulid();
             $table->string("name")->unique();
             $table->decimal("price",10,2);
             $table->boolean("active")->default(true);
             $table->foreignId("created_by")->constrained("users")->onDelete("cascade");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

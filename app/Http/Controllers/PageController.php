@@ -10,8 +10,8 @@ class PageController extends Controller
 {
     public function home()
     {
-        $products = Product::with("createdBy")->get();
-        // $products = Product::paginate(4);
+        // $products = Product::with("createdBy")->get();
+        $products = Product::paginate(4);
         // $products = DB::table("products")->paginate(4);
         // dd($products);
         return view('home', ['products' => $products]);

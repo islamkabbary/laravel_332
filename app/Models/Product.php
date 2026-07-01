@@ -11,7 +11,7 @@ class Product extends Model
     use HasFactory;
     // protected $table = "hamada";
 
-    protected $fillable = ['name', "price"];
+    protected $fillable = ['name', "price", "created_by", "active"];
     // protected $guarded = ["name"];
 
 
