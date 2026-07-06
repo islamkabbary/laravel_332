@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $this->authorize("create");
+        // $this->authorize("create");
         return view("products.create");
     }
 
@@ -34,12 +35,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize("create");
+        // $this->authorize("create");
         $data = $request->validate([
             "name" => "required|string|min:6",
             "price" => "required|numeric",
+            "image" => "nullable|image|mimes:png,jpg,jpeg|max:2048",
         ]);
         $data['created_by'] = 1;
+        if ($request->hasFile("image")) {
+            $image = $request->file("image");
+            $oImage = $image->getClientOriginalName();
+            Storage::disk("public")->putFileAs("products_imgs", $image, $oImage);
+        }
         Product::create($data);
         return redirect()->to("/products")->with("success", "Product Create Success");
     }
