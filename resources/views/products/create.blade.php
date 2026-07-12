@@ -6,6 +6,7 @@
     <div class="container mt-5">
         <div class="row mt-5">
             <form class="row my-5" method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="">Name</label>

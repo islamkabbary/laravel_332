@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -21,17 +18,7 @@ class ProductController extends Controller
     {
         $products = Product::paginate($request->query("limit"));
         // return response()->json($products);
-        // return ApiResponse::success($products);
-        return view('products.index', ['products' => $products]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // $this->authorize("create");
-        return view("products.create");
+        return ApiResponse::success($products);
     }
 
     /**
@@ -54,7 +41,6 @@ class ProductController extends Controller
             }
             $product = Product::create($data);
             return ApiResponse::success($product, code: 201);
-            // return redirect()->to("/products")->with("success", "Product Create Success");
         } catch (\Throwable $th) {
             Log::channel("test")->error($th->getMessage() . $th->getFile() . $th->getLine());
         }
@@ -63,15 +49,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
-    {
-        // dd($product);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
+    public function show(string $id)
     {
         //
     }
@@ -79,7 +57,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -87,8 +65,8 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
-        $this->authorize("delete");
+        //
     }
 }

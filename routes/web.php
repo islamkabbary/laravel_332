@@ -7,6 +7,7 @@ use App\Http\Middleware\IsAdminMiddleware;
 use App\Models\category;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 
@@ -160,6 +161,9 @@ require __DIR__ . '/auth.php';
 
 // Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () {
     Route::resource("products", ProductController::class);
-});
+// });
+
+
+
