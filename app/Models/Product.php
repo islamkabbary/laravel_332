@@ -11,7 +11,13 @@ class Product extends Model
     use HasFactory;
     // protected $table = "hamada";
 
-    protected $fillable = ['name', "price", "created_by", "active"];
+    protected $fillable = ['name', "price", "created_by", "active", "image"];
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
+    }
     // protected $guarded = ["name"];
 
 

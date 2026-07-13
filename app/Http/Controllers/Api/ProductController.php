@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductRecource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +19,7 @@ class ProductController extends Controller
     {
         $products = Product::paginate($request->query("limit"));
         // return response()->json($products);
-        return ApiResponse::success($products);
+        return ApiResponse::success(ProductRecource::collection($products));
     }
 
     /**
@@ -37,10 +38,11 @@ class ProductController extends Controller
             if ($request->hasFile("image")) {
                 $image = $request->file("image");
                 $oImage = $image->getClientOriginalName();
-                Storage::disk("public")->putFileAs("products_imgs", $image, $oImage);
+                $path = Storage::disk("public")->putFileAs("products_imgs", $image, $oImage);
             }
+            $data['image'] = $path;
             $product = Product::create($data);
-            return ApiResponse::success($product, code: 201);
+            return ApiResponse::success(new ProductRecource($product), code: 201);
         } catch (\Throwable $th) {
             Log::channel("test")->error($th->getMessage() . $th->getFile() . $th->getLine());
         }
@@ -49,9 +51,9 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        return ApiResponse::success(new ProductRecource($product));
     }
 
     /**
